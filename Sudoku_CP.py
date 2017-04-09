@@ -76,3 +76,25 @@ def display(values):
 
 grid1 = '003020600900305001001806400008102900700000008006708200002609500800203009005010300'
 display(parse_grid(grid1))
+
+def solve(grid): return search(parse_grid(grid))
+
+def search(values):
+    "Using depth-first search and propagation, try all possible values."
+    if values is False:
+        return False ## Failed earlier
+    if all(len(values[s]) == 1 for s in squares): 
+        return values ## Solved!
+    ## Chose the unfilled square s with the fewest possibilities
+    n,s = min((len(values[s]), s) for s in squares if len(values[s]) > 1)
+    return some(search(assign(values.copy(), s, d)) 
+		for d in values[s])
+
+def some(seq):
+    "Return some element of seq that is true."
+    for e in seq:
+        if e: return e
+    return False
+
+display(solve(grid1))
+
