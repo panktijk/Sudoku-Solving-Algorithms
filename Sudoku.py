@@ -63,22 +63,6 @@ def eliminate(values, s, d):
     			return False
     return values
 
-def display(values):
-    "Display these values as a 2-D grid."
-    width = 1+max(len(values[s]) for s in squares)
-    line = '+'.join(['-'*(width*3)]*3)
-    for r in rows:
-        print(''.join(values[r+c].center(width)+('|' if c in '36' else '') for c in cols))
-        if r in 'CF': 
-        	print(line)
-    print
-
-
-grid1 = '003020600900305001001806400008102900700000008006708200002609500800203009005010300'
-display(parse_grid(grid1))
-
-def solve(grid): return search(parse_grid(grid))
-
 def search(values):
     "Using depth-first search and propagation, try all possible values."
     if values is False:
@@ -96,5 +80,28 @@ def some(seq):
         if e: return e
     return False
 
-display(solve(grid1))
+def display(values):
+    "Display these values as a 2-D grid."
+    width = 1+max(len(values[s]) for s in squares)
+    line = '+'.join(['-'*(width*3)]*3)
+    for r in rows:
+        print(''.join(values[r+c].center(width)+('|' if c in '36' else '') for c in cols))
+        if r in 'CF': 
+        	print(line)
+    print
+
+
+def solve_CP(test_grid):
+	return display(parse_grid(test_grid))
+
+def solve_backtracking(test_grid):
+	return display(search(parse_grid(test_grid)))
+
+
+test_grid = '003020600900305001001806400008102900700000008006708200002609500800203009005010300'
+print("Solved by Constraint Programming:")
+solve_CP(test_grid)
+print("Solved by Backtracking:")
+solve_backtracking(test_grid)
+
 
