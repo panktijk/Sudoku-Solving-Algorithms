@@ -25,13 +25,17 @@ def solve_puzzles_list(method, puzzles):
     return elapsed
     
 def plot_times(x, y, title):
-    plt.figure()
-    y_pos = np.arange(len(x))
-    plt.bar(y_pos, y, align='center', alpha=0.5)
-    plt.xticks(y_pos, x)
-    plt.xlabel('Method used')
-    plt.ylabel('Time taken')
-    plt.title(title) 
+    fig, ax = plt.subplots()    
+    width = 0.75 # the width of the bars 
+    ind = np.arange(len(y))  # the x locations for the groups
+    ax.barh(ind, y, width, color="blue")
+    ax.set_yticks(ind+width/2)
+    ax.set_yticklabels(x, minor=False)
+    for i, v in enumerate(y):
+        ax.text(v + 1, i + .25, str(v), color='blue', fontweight='bold')
+    plt.title(title)
+    plt.ylabel('Method Used')
+    plt.xlabel('Time Taken (seconds)')
     plt.show()
 
 easy_test_grid = '003020600900305001001806400008102900700000008006708200002609500800203009005010300'
@@ -52,7 +56,7 @@ hard_test_grid = '40000080503000000000070000002000006000008040000001000000060307
 print("\nHard Test puzzle solved by Brute Force:")
 p = list(hard_test_grid)
 hard_test_grid_BF = [p[i:i + 9] for i in xrange(0, len(p), 9)] 
-#solve_single_puzzle(solve_BF, hard_test_grid_BF)
+solve_single_puzzle(solve_BF, hard_test_grid_BF)
 
 print("\nHard Test puzzle solved by Constraint Propagation:")
 display(solve_single_puzzle(solve_CP, hard_test_grid))
